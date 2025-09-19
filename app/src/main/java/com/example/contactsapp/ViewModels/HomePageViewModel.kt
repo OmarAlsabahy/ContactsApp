@@ -27,10 +27,10 @@ class HomePageViewModel(private val repository: IHomeRepository): ViewModel() {
     }
 
     fun search(query: String){
-        val items = _contacts.value.filter {item->
-            item.name!!.contains(query)
-            item.phone!!.contains(query)
-        }
+        val items = _contacts.value?.filter { item ->
+            (item.name?.contains(query, ignoreCase = true) == true) ||
+                    (item.phone?.contains(query, ignoreCase = true) == true)
+        } ?: emptyList()
         _searchedItems.value = items
     }
 
